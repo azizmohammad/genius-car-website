@@ -4,14 +4,14 @@ import logo from '../../assets/logo.svg'
 
 const Header = () => {
     const menuItem = <>
-        <li className='font-semibold'><Link to='/'>Home</Link></li>
-        <li className='font-semibold'><Link to='/'>About</Link></li>
-        <li className='font-semibold'><Link to='/'>Services</Link></li>
-        <li className='font-semibold'><Link to='/'>Blog</Link></li>
-        <li className='font-semibold'><Link to='/'>Contact</Link></li>
+        <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/'>Home</Link></li>
+        <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/'>About</Link></li>
+        <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/'>Services</Link></li>
+        <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/'>Blog</Link></li>
+        <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/'>Contact</Link></li>
     </>
     return (
-        <div className="navbar h-20 mb-12 pt-6 p-8 text-orange-500">
+        <div className="navbar h-20 pb-12 py-6 p-8 text-orange-500">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -31,7 +31,7 @@ const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <button className="btn btn-outline btn-warning">Appointment</button>
+                <button className="btn border-orange-600 text-orange-600 hover:bg-orange-500 hover:text-white hover:border-transparent bg-transparent">Appointment</button>
             </div>
         </div>
     );
