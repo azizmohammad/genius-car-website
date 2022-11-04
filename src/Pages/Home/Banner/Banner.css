@@ -8,4 +8,5 @@
     display: inline-block;
     border-radius: 16px;
     background: linear-gradient(to right, rgb(20, 20, 20) 0%, rgba(21, 21, 21, 0) 100%);
+    margin-top: 32px;
 }

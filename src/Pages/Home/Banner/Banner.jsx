@@ -59,7 +59,7 @@ const Banner = () => {
             slidesPerView={1}
             navigation
             onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
+        // onSwiper={(swiper) => console.log(swiper)}
         >
             {
                 bannerData.map(slide => <SwiperSlide key={slide.id}>

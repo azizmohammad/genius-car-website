@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { FaFacebook, FaGithub, } from 'react-icons/fa';
 import { FcGoogle } from "react-icons/fc";
 import { Link } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
-
+    const { singIn } = useContext(AuthContext);
     const handleLogin = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        singIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                form.reset();
+            })
+            .catch(e => {
+                console.log(toast.error('Your Password Not Match'))
+            })
+
     }
 
 
@@ -26,17 +41,21 @@ const Login = () => {
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="text" placeholder="Your email" className="input input-bordered" />
+                                <input name='email' type="email" placeholder="Your email" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Confirm Password</span>
                                 </label>
-                                <input type="text" placeholder="Your password" className="input input-bordered" />
+                                <input name='password' type="password" placeholder="Your password" className="input input-bordered" required />
                                 <label className="label">
-                                    <Link href="#" className="label-text-alt link link-hover">Forgot password?</Link>
+
                                 </label>
                             </div>
+                            <div className="form-control py-4">
+                                <input className="btn bg-orange-500 text-white border-transparent" type="submit" value="Login" />
+                            </div>
+
                             <div className='text-center'>
                                 <h3 className='text-gray-900 font-bold'>Or Sign In with</h3>
                                 <div className='flex justify-center mt-5'>
@@ -45,13 +64,11 @@ const Login = () => {
                                     <FaGithub className='mr-3 text-3xl mb-5'></FaGithub>
                                 </div>
 
-                                <Link className="text-lg font-medium ">Have an account?
-                                    <span className='text-orange-500 ml-2'>Sign In</span>
-                                </Link>
+                                <p className="text-lg font-medium ">Have an account?
+                                    <Link to='/singup' className='text-orange-500 ml-2'>Sign In</Link>
+                                </p>
                             </div>
-                            <div className="form-control mt-6">
-                                <input className="btn btn-primary" type="submit" value="Login" />
-                            </div>
+
                         </form>
 
                     </div>
