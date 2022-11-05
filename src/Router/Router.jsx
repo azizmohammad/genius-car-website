@@ -5,6 +5,7 @@ import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import SingUp from "../Pages/SingUp/SingUp";
 import ErrorePage from "../Shered/ErrorePage/ErrorePage";
+import PrivateRoutes from "./Private/PrivateRoutes";
 
 const router = createBrowserRouter([
     {

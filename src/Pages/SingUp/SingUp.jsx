@@ -1,14 +1,22 @@
-import React, { useContext } from 'react';
+import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import React, { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
 import { FaFacebook, FaGithub, } from 'react-icons/fa';
 import { FcGoogle } from "react-icons/fc";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 
 const SingUp = () => {
+    // navigate
+    const navigate = useNavigate();
+    const { createUser, googleLogin, githubLogin, facebookLogin, emailVerifiy, updateUserProfile } = useContext(AuthContext)
+    const googleAuthProvider = new GoogleAuthProvider();
+    const githubAuthProvider = new GithubAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
 
-    const { createUser } = useContext(AuthContext)
+    const [error, setError] = useState('');
 
     const handleSingUp = (e) => {
         e.preventDefault()
@@ -23,13 +31,68 @@ const SingUp = () => {
                 const user = result.user;
                 console.log(user);
                 form.reset();
+                setError('');
+                navigate('/login');
+                handleEmailVerifiction();
+                handleUpdateUserProfile(name,);
+                toast.success('Verify Your Email Address Check Your Spam Box')
             })
             .catch(error => {
                 console.log(error)
                 // setError(error.message)
             })
     }
+    // email verification
+    const handleEmailVerifiction = () => {
+        emailVerifiy()
+            .then(() => {
+                // Email verification sent!
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    // user profile update
+    const handleUpdateUserProfile = (name, photoURL) => {
+        const profile = {
+            displayName: name,
+            photoURL: photoURL,
+        }
+        updateUserProfile(profile)
+            .then(() => {
+                // Profile updated!
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
 
+    // google login
+    const handleGoogleSingIn = () => {
+        googleLogin(googleAuthProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => console.log('error', error.message))
+    }
+    // github login
+    const handleGithubLogin = () => {
+        githubLogin(githubAuthProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => console.log('error', error.message))
+    }
+    // facebook login
+    const handleFacebookSingIn = () => {
+        facebookLogin(facebookProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => console.log('error', error.message))
+    }
 
     return (
         <div className="hero w-full my-20 ">
@@ -60,7 +123,7 @@ const SingUp = () => {
                             </label>
                             <input name='password' type="password" placeholder="Your password" className="input input-bordered" required />
                             <label className="label">
-
+                                {error}
                             </label>
                         </div>
                         <div className="form-control py-4">
@@ -69,9 +132,9 @@ const SingUp = () => {
                         <div className='text-center'>
                             <h3 className='text-gray-900 font-bold'>Or Sign In with</h3>
                             <div className='flex justify-center mt-5'>
-                                <FcGoogle className='mr-3 text-3xl'></FcGoogle>
-                                <FaFacebook className='mr-3 text-3xl text-info'></FaFacebook>
-                                <FaGithub className='mr-3 text-3xl mb-5'></FaGithub>
+                                <FcGoogle onClick={handleGoogleSingIn} className='mr-3 text-3xl'></FcGoogle>
+                                <FaFacebook onClick={handleFacebookSingIn} className='mr-3 text-3xl text-info'></FaFacebook>
+                                <FaGithub onClick={handleGithubLogin} className='mr-3 text-3xl mb-5'></FaGithub>
                             </div>
 
                             <p className="text-lg font-medium ">Already have an account?

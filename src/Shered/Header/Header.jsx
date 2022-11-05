@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/logo.svg'
-
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import { HiOutlineShoppingBag, HiSearch } from "react-icons/hi";
+import { FaUserAlt } from 'react-icons/fa';
 const Header = () => {
+
+    const { user, lotOut } = useContext(AuthContext);
+
+    const handelLogOut = () => {
+        lotOut()
+            .then(() => { })
+            .catch(error => console.log(error))
+    }
 
     const { pathname } = useLocation();
     const menuItem = <>
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/home'>Home</Link></li>
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#about'>about</a></li>
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#services'>Services</a></li>
-        <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#products'>Products</a></li>
-        <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#team'>Team</a></li>
+
+
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#blog'>Blog</a></li>
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#contact'>Contact</a></li>
-
-        <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/login'>Login</Link></li>
     </>
     return (
         <div className="navbar px-8 text-orange-500 ">
@@ -35,15 +43,38 @@ const Header = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
-                    {pathname === '/login' ? (
-                        <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/login'>oder</Link></li>
-                    ) : menuItem}
+                    {menuItem}
                 </ul>
             </div>
             <div className="navbar-end">
-                {pathname === '/login' ? (
-                    <button className="btn border-orange-600 text-orange-600 hover:bg-orange-500 hover:text-white hover:border-transparent bg-transparent">Login</button>
-                ) : <button className="btn border-orange-600 text-orange-600 hover:bg-orange-500 hover:text-white hover:border-transparent bg-transparent">Appointment</button>}
+                {
+                    user?.uid ?
+                        <>
+                            <span className=' mr-2 text-orange-400'>{user?.displayName}</span>
+                            <HiOutlineShoppingBag className='text-2xl'></HiOutlineShoppingBag>
+                            <HiSearch className='text-2xl mx-2'></HiSearch>
+                            <Link to='/login'><button className="btn bg-orange-600 text-gray-50 border-transparent hover:bg-transparent hover:text-orange-600 hover:border-orange-500 mr-3" to='/login'>Appointment</button></Link>
+
+                        </>
+                        : <Link className="btn btn-outline btn-info mr-3" to='/login'>Login</Link>
+                }
+                <Link>
+                    {user?.photoURL ?
+                        <div title={user.displayName}>
+                            <img className='ms-3 w-10 h-10 rounded-full ' src={user?.photoURL} data-tip={user.displayName} alt="" />
+                        </div>
+                        : <div className="dropdown dropdown-bottom">
+                            <label tabIndex={0} className="btn bg-white m-1">
+                                <FaUserAlt className='text-orange-400 text-xl ms-1'></FaUserAlt>
+                            </label>
+                            <ul tabIndex={0} className="dropdown-content menu px-2 shadow bg-blue-300 rounded-box ">
+                                <Link to='/login'><button onClick={handelLogOut} className="btn  bg-orange-600 text-gray-50 border-transparent hover:bg-transparent hover:text-orange-600 hover:border-orange-500 my-2" to='/login'>LogOut</button></Link>
+
+                                {/* <li><a>Item 2</a></li> */}
+                            </ul>
+                        </div>
+                    }
+                </Link>
 
             </div>
         </div>

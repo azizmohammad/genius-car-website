@@ -1,13 +1,25 @@
-import React, { useContext } from 'react';
+import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import React, { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaFacebook, FaGithub, } from 'react-icons/fa';
 import { FcGoogle } from "react-icons/fc";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
-    const { singIn } = useContext(AuthContext);
+    const { singIn, googleLogin, githubLogin, facebookLogin } = useContext(AuthContext);
+    const googleAuthProvider = new GoogleAuthProvider();
+    const githubAuthProvider = new GithubAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
+
+    const [error, setError] = useState('');
+    const { setLoading } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
+
     const handleLogin = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -18,13 +30,50 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
                 form.reset();
+                setError("");
+                if (user.emailVerified) {
+                    navigate(from, { replace: true });
+                }
+                else {
+                    toast.error('Your Email Not Verify ')
+                }
             })
             .catch(e => {
                 console.log(toast.error('Your Password Not Match'))
+                setError(e.message);
+            })
+            .finally(() => {
+                setLoading(false);
             })
 
     }
 
+    // google login
+    const handleGoogleSingIn = () => {
+        googleLogin(googleAuthProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => console.log('error', error.message))
+    }
+    // github login
+    const handleGithubLogin = () => {
+        githubLogin(githubAuthProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => console.log('error', error.message))
+    }
+    const handleFacebookSingIn = () => {
+        facebookLogin(facebookProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => console.log('error', error.message))
+    }
 
     return (
         <div>
@@ -49,7 +98,7 @@ const Login = () => {
                                 </label>
                                 <input name='password' type="password" placeholder="Your password" className="input input-bordered" required />
                                 <label className="label">
-
+                                    {error}
                                 </label>
                             </div>
                             <div className="form-control py-4">
@@ -59,9 +108,9 @@ const Login = () => {
                             <div className='text-center'>
                                 <h3 className='text-gray-900 font-bold'>Or Sign In with</h3>
                                 <div className='flex justify-center mt-5'>
-                                    <FcGoogle className='mr-3 text-3xl'></FcGoogle>
-                                    <FaFacebook className='mr-3 text-3xl text-info'></FaFacebook>
-                                    <FaGithub className='mr-3 text-3xl mb-5'></FaGithub>
+                                    <FcGoogle onClick={handleGoogleSingIn} className='mr-3 text-3xl'></FcGoogle>
+                                    <FaFacebook onClick={handleFacebookSingIn} className='mr-3 text-3xl text-info'></FaFacebook>
+                                    <FaGithub onClick={handleGithubLogin} className='mr-3 text-3xl mb-5'></FaGithub>
                                 </div>
 
                                 <p className="text-lg font-medium ">Have an account?
