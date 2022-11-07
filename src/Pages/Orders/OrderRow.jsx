@@ -1,11 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import swal from 'sweetalert';
 
-const OrderRow = ({ order }) => {
+const OrderRow = ({ order, handleDelete, handleStatusUpdate }) => {
     const { _id, serviceName, price, customer, email, phone,
-        service } = order;
+        service, status } = order;
     const [orderService, setOrderService] = useState({})
 
     useEffect(() => {
@@ -14,33 +13,7 @@ const OrderRow = ({ order }) => {
             .then(data => setOrderService(data))
     }, [service])
 
-    const handleDelete = id => {
-        const proceed = swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                    swal("Poof! Your imaginary file has been deleted!", {
-                        icon: "success",
-                    });
-                } else {
-                    swal("Your imaginary file is safe!");
-                }
-            });
-        if (proceed) {
-            fetch(`http://localhost:5000/orders/${id}`, {
-                method: 'DELETE'
-            })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data);
-                })
-        }
-    }
+
 
     return (
         <tr>
@@ -72,7 +45,9 @@ const OrderRow = ({ order }) => {
             </td>
             <td>{email}</td>
             <th>
-                <button className="btn bg-orange-600 border-0">Padding</button>
+                <button
+                    onClick={() => handleStatusUpdate(_id)}
+                    className={`btn bg-orange-600 border-0`}>{status ? status : 'Padding'}</button>
             </th>
         </tr>
     );

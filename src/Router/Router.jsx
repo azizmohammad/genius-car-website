@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import CheckOut from "../Pages/CheckOut/CheckOut";
 import Home from "../Pages/Home/Home/Home";
+import Services from "../Pages/Home/Services/Services";
+import ServicesCard from "../Pages/Home/Services/ServicesCard";
 import Login from "../Pages/Login/Login";
 import Orders from "../Pages/Orders/Orders";
 import SingUp from "../Pages/SingUp/SingUp";
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
                 path: '/orders',
                 element: <Orders></Orders>,
             },
+            {
+                path: '/service',
+                element: <Services></Services>
+            }
         ]
     },
 ])
