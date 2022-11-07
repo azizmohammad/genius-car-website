@@ -8,13 +8,12 @@ import img from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
-    const { singIn, googleLogin, githubLogin, facebookLogin } = useContext(AuthContext);
+    const { singIn, googleLogin, githubLogin, facebookLogin, setLoading } = useContext(AuthContext);
     const googleAuthProvider = new GoogleAuthProvider();
     const githubAuthProvider = new GithubAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
 
     const [error, setError] = useState('');
-    const { setLoading } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
 

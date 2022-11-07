@@ -10,7 +10,3 @@
     background: linear-gradient(to left, rgb(3, 3, 3) 0%, #ce555500 100%);
     margin-top: 32px;
 }
-
-#arow {
-    clip-path: polygon(7% 78%, 93% 78%, 100% 100%, 0% 100%);
-}

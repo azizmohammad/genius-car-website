@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext, } from 'react';
+import { Link, } from 'react-router-dom';
 import logo from '../../assets/logo.svg'
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 import { HiOutlineShoppingBag, HiSearch } from "react-icons/hi";
@@ -14,15 +14,20 @@ const Header = () => {
             .catch(error => console.log(error))
     }
 
-    const { pathname } = useLocation();
+    // const { pathname } = useLocation();
     const menuItem = <>
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/home'>Home</Link></li>
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#about'>about</a></li>
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#services'>Services</a></li>
 
-
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#blog'>Blog</a></li>
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#contact'>Contact</a></li>
+        {
+            user?.displayName ?
+                <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/orders'>Orders</Link></li>
+                :
+                <></>
+        }
     </>
     return (
         <div className="navbar px-8 text-orange-500 ">
@@ -32,9 +37,7 @@ const Header = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                        {pathname === '/login' ? (
-                            <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/login'>oder</Link></li>
-                        ) : menuItem}
+                        {menuItem}
                     </ul>
                 </div>
                 <div className=" text-xl">
@@ -49,7 +52,9 @@ const Header = () => {
             <div className="navbar-end">
                 {
                     user?.uid ?
+
                         <>
+
                             <span className=' mr-2 text-orange-400'>{user?.displayName}</span>
                             <HiOutlineShoppingBag className='text-2xl'></HiOutlineShoppingBag>
                             <HiSearch className='text-2xl mx-2'></HiSearch>

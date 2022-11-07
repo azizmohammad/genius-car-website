@@ -30,12 +30,12 @@ const SingUp = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                form.reset();
                 setError('');
                 navigate('/login');
                 handleEmailVerifiction();
-                handleUpdateUserProfile(name,);
+                handleUpdateUserProfile(name);
                 toast.success('Verify Your Email Address Check Your Spam Box')
+                form.reset();
             })
             .catch(error => {
                 console.log(error)
@@ -53,10 +53,9 @@ const SingUp = () => {
             });
     }
     // user profile update
-    const handleUpdateUserProfile = (name, photoURL) => {
+    const handleUpdateUserProfile = (name,) => {
         const profile = {
             displayName: name,
-            photoURL: photoURL,
         }
         updateUserProfile(profile)
             .then(() => {
@@ -108,7 +107,7 @@ const SingUp = () => {
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
-                            <input type="text" placeholder="Your Name" className="input input-bordered" />
+                            <input name='name' type="text" placeholder="Your Name" className="input input-bordered" />
                         </div>
 
                         <div className="form-control">
