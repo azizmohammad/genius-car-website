@@ -53,7 +53,7 @@ const Header = () => {
 
                         <>
 
-                            <span className=' mr-2 text-orange-400'>{user?.displayName}</span>
+                            {/* <span className=' mr-2 text-orange-400'>{user?.displayName}</span> */}
                             <HiOutlineShoppingBag className='text-2xl'></HiOutlineShoppingBag>
                             <HiSearch className='text-2xl mx-2'></HiSearch>
                             <Link to='/login'><button className="btn bg-orange-600 text-gray-50 border-transparent hover:bg-transparent hover:text-orange-600 hover:border-orange-500 mr-3" to='/login'>Appointment</button></Link>
@@ -64,8 +64,20 @@ const Header = () => {
                 <Link>
                     {user?.photoURL ?
                         <div title={user.displayName}>
-                            <img className='ms-3 w-10 h-10 rounded-full ' src={user?.photoURL} data-tip={user.displayName} alt="" />
+                            <div className="dropdown dropdown-bottom">
+                                <label tabIndex={0} className=" bg-green-500 m-1">
+                                    <img className='ms-3 w-12 h-12  rounded-full ' src={user?.photoURL} data-tip={user.displayName} alt="" />
+                                </label>
+                                <ul tabIndex={0} className="dropdown-content menu px-2 shadow bg-blue-300 rounded-box ">
+                                    <Link to='/login'><button onClick={handelLogOut} className="btn  bg-orange-600 text-gray-50 border-transparent hover:bg-transparent hover:text-orange-600 hover:border-orange-500 my-2" to='/login'>LogOut</button></Link>
+
+                                    <span className='text-center text-black t'>{user?.displayName}</span>
+                                </ul>
+                            </div>
+
+
                         </div>
+
                         : <div className="dropdown dropdown-bottom">
                             <label tabIndex={0} className="btn bg-white m-1">
                                 <FaUserAlt className='text-orange-400 text-xl ms-1'></FaUserAlt>
@@ -73,7 +85,7 @@ const Header = () => {
                             <ul tabIndex={0} className="dropdown-content menu px-2 shadow bg-blue-300 rounded-box ">
                                 <Link to='/login'><button onClick={handelLogOut} className="btn  bg-orange-600 text-gray-50 border-transparent hover:bg-transparent hover:text-orange-600 hover:border-orange-500 my-2" to='/login'>LogOut</button></Link>
 
-                                {/* <li><a>Item 2</a></li> */}
+                                <span className=' text-center text-black'>{user?.displayName}</span>
                             </ul>
                         </div>
                     }

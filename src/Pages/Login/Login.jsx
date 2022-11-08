@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import { setAuthToken } from '../../Shered/Header/auth';
 
 const Login = () => {
     const { singIn, googleLogin, githubLogin, facebookLogin, setLoading } = useContext(AuthContext);
@@ -74,6 +75,32 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+
+                const currentUser = {
+                    email: user.email,
+                }
+                console.log(currentUser);
+
+                // get jwt token
+                fetch('https://genius-car-server-woad-nu.vercel.app/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        // jwt token add localstroge
+                        localStorage.setItem('genius-Token', data.token)
+                        if (user.emailVerified) {
+                            navigate(from, { replace: true });
+                        }
+                        else {
+                            toast.error('Your Email Not Verify ')
+                        }
+                    })
             })
             .catch(error => console.log('error', error.message))
     }
@@ -83,6 +110,31 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                const currentUser = {
+                    email: user.email,
+                }
+                console.log(currentUser);
+
+                // get jwt token
+                fetch('https://genius-car-server-woad-nu.vercel.app/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        // jwt token add localstroge
+                        localStorage.setItem('genius-Token', data.token)
+                        if (user.emailVerified) {
+                            navigate(from, { replace: true });
+                        }
+                        else {
+                            toast.error('Your Email Not Verify ')
+                        }
+                    })
             })
             .catch(error => console.log('error', error.message))
     }
@@ -91,6 +143,32 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+
+                const currentUser = {
+                    email: user.email,
+                }
+                console.log(currentUser);
+
+                // get jwt token
+                fetch('https://genius-car-server-woad-nu.vercel.app/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        // jwt token add localstroge
+                        localStorage.setItem('genius-Token', data.token)
+                        if (user.emailVerified) {
+                            navigate(from, { replace: true });
+                        }
+                        else {
+                            toast.error('Your Email Not Verify ')
+                        }
+                    })
             })
             .catch(error => console.log('error', error.message))
     }
