@@ -23,10 +23,8 @@ const Header = () => {
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#blog'>Blog</a></li>
         <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><a href='#contact'>Contact</a></li>
         {
-            user?.displayName ?
-                <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/orders'>Orders</Link></li>
-                :
-                <></>
+            user?.displayName &&
+            <li className='font-semibold hover:bg-orange-500 hover:text-white hover:border-transparent transition-all rounded-lg'><Link to='/orders'>Orders</Link></li>
         }
     </>
     return (

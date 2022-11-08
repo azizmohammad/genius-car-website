@@ -1,4 +1,4 @@
-.banner-order::after {
+/* .banner-order::after {
     content: "";
     position: absolute;
     top: 0;
@@ -7,4 +7,4 @@
     height: 100%;
     display: inline-block;
     background: linear-gradient(to right, rgb(20, 20, 20) 0%, rgba(21, 21, 21, 0) 100%);
-}
+} */

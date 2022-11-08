@@ -34,11 +34,11 @@ const CheckOut = () => {
 
         // }
 
-        fetch('http://localhost:5000/orders', {
+        fetch('https://genius-car-server-woad-nu.vercel.app/orders', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
-                // authorization: `Bearer ${localStorage.getItem('genius-token')}`
+                authorization: `Bearer ${localStorage.getItem('genius-Token')}`
             },
             body: JSON.stringify(order)
         })

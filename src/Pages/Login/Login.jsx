@@ -24,18 +24,39 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
+
         singIn(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
+                const currentUser = {
+                    email: user.email,
+                }
+                console.log(currentUser);
+
+                // get jwt token
+                fetch('https://genius-car-server-woad-nu.vercel.app/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        // jwt token add localstroge
+                        localStorage.setItem('genius-Token', data.token)
+                        if (user.emailVerified) {
+                            navigate(from, { replace: true });
+                        }
+                        else {
+                            toast.error('Your Email Not Verify ')
+                        }
+                    })
+
                 form.reset();
                 setError("");
-                if (user.emailVerified) {
-                    navigate(from, { replace: true });
-                }
-                else {
-                    toast.error('Your Email Not Verify ')
-                }
+
             })
             .catch(e => {
                 console.log(toast.error('Your Password Not Match'))

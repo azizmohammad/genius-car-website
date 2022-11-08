@@ -6,19 +6,31 @@ import OrderBanner from './OrderBanner/OrderBanner';
 import OrderRow from './OrderRow';
 
 const Orders = () => {
-    const { user } = useContext(AuthContext);
+    const { user, lotOut } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
+    const [orderDlt, setOrderDlt] = useState(false);
 
     useEffect(() => {
         if (!user?.email) return;
-        fetch(`http://localhost:5000/orders?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => setOrders(data))
-    }, [user?.email])
+        fetch(`https://genius-car-server-woad-nu.vercel.app/orders?email=${user?.email}`, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('genius-Token')}`
+            }
+        })
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    return lotOut();
+                }
+                return res.json();
+            })
+            .then(data => {
+                setOrders(data)
+            })
+    }, [user?.email, lotOut])
 
 
     const handleDelete = id => {
-        const proceed = swal({
+        const proced = swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this imaginary file!",
             icon: "warning",
@@ -27,16 +39,21 @@ const Orders = () => {
         })
             .then((willDelete) => {
                 if (willDelete) {
+                    setOrderDlt(true)
                     swal("Your Product Successfull deleted!", {
                         icon: "success",
                     });
                 } else {
                     swal("Your Product is Not Delete!");
+                    setOrderDlt(false)
                 }
             });
-        if (proceed) {
-            fetch(`http://localhost:5000/orders/${id}`, {
-                method: 'DELETE'
+        if (orderDlt) {
+            fetch(`https://genius-car-server-woad-nu.vercel.app/orders/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('genius-Token')}`
+                }
             })
                 .then(res => res.json())
                 .then(data => {
@@ -53,10 +70,11 @@ const Orders = () => {
     }
 
     const handleStatusUpdate = (id) => {
-        fetch(`http://localhost:5000/orders/${id}`, {
+        fetch(`https://genius-car-server-woad-nu.vercel.app/orders/${id}`, {
             method: "PATCH",
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('genius-Token')}`
             },
             body: JSON.stringify({ status: 'Approved' })
         })

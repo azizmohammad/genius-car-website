@@ -4,6 +4,7 @@ import orderbanner from '../../../assets/images/checkout/checkout.png'
 
 const OrderBanner = () => {
     return (
+
         <div>
             <div>
                 <div className='banner-order'>
@@ -16,9 +17,10 @@ const OrderBanner = () => {
                     </h1>
                 </div>
 
+
                 <div className="absolute flex justify-center left-1/3 transform -translate-y-1/3 w-2/5  top-2/3 bg-orange-500 py-2 rounded-xl">
-                    <Link to='/home' className='text-white underline mr-2'>Home/</Link>
-                    <Link to="/service" className='text-white underline'>Product Details</Link>
+                    <Link to='/' className='text-white underline mr-2'>Home/</Link>
+                    <Link className='text-white underline'>Checkout</Link>
                 </div>
             </div>
         </div>

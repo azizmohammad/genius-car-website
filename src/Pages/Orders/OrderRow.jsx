@@ -8,11 +8,10 @@ const OrderRow = ({ order, handleDelete, handleStatusUpdate }) => {
     const [orderService, setOrderService] = useState({})
 
     useEffect(() => {
-        fetch(`http://localhost:5000/services/${service}`)
+        fetch(`https://genius-car-server-woad-nu.vercel.app/services/${service}`)
             .then(res => res.json())
             .then(data => setOrderService(data))
     }, [service])
-
 
 
     return (
@@ -47,7 +46,7 @@ const OrderRow = ({ order, handleDelete, handleStatusUpdate }) => {
             <th>
                 <button
                     onClick={() => handleStatusUpdate(_id)}
-                    className={`btn bg-orange-600 border-0`}>{status ? status : 'Padding'}</button>
+                    className={`btn bg-orange-600 border-0 ${status === 'Approved' && 'bg-green-600 text-white'}`}>{status ? status : 'Padding'}</button>
             </th>
         </tr>
     );
