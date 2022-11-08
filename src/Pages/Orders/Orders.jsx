@@ -30,7 +30,7 @@ const Orders = () => {
 
 
     const handleDelete = id => {
-        const proced = swal({
+        const orderDlt = swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this imaginary file!",
             icon: "warning",

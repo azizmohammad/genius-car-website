@@ -54,7 +54,7 @@ const Header = () => {
                         <>
 
                             {/* <span className=' mr-2 text-orange-400'>{user?.displayName}</span> */}
-                            <HiOutlineShoppingBag className='text-2xl'></HiOutlineShoppingBag>
+                            <Link to='/orders'><HiOutlineShoppingBag className='text-2xl'></HiOutlineShoppingBag></Link>
                             <HiSearch className='text-2xl mx-2'></HiSearch>
                             <Link to='/login'><button className="btn bg-orange-600 text-gray-50 border-transparent hover:bg-transparent hover:text-orange-600 hover:border-orange-500 mr-3" to='/login'>Appointment</button></Link>
 
