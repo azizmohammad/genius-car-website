@@ -1,6 +1,5 @@
 import React from 'react';
 import person from '../../../assets/images/about_us/person.jpg'
-import parts from '../../../assets/images/about_us/parts.jpg'
 
 const About = () => {
     return (
@@ -8,7 +7,6 @@ const About = () => {
             <div className="hero-content flex-col lg:flex-row">
                 <div className='relative w-1/2'>
                     <img src={person} className="w-4/5 h-full rounded-lg shadow-2xl" alt='' />
-                    <img src={parts} className=" absolute w-3/5 right-4 top-1/2 border-8 border-white rounded-lg shadow-2xl" alt='' />
                 </div>
 
                 <div className='w-1/2'>
